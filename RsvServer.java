@@ -77,7 +77,7 @@ public class RsvServer extends UnicastRemoteObject implements Reservation
             }
 
             if(seatTaken == false){
-                results += "Seat is already purchased. Check passenger list. \n";
+                results += "Failed to reserve: seat not available. \n";
             }
 
 
@@ -88,16 +88,18 @@ public class RsvServer extends UnicastRemoteObject implements Reservation
                     passengers.put(seatNum, name);
                     economyClass[i] = 0;
                     seatTaken = true;
-                    results += "Successfully reserved seat " + String.valueOf(seatNum) + " for passenger " + name + "\n";
+                    results += "Successfully reserved seat " + String.valueOf(seatNum) + " for passenger " + name + ". \n";
                 }
             }
 
             if(seatTaken == false){
-                results += "Seat is already purchased. Check passenger list. \n";
+                results += "Failed to reserve: seat not available. \n";
             }
         }
+        else{
+            results += "Failed to reserve: invalid seat number. \n";
+        }
 
-        results += Arrays.toString(businessClass) + Arrays.toString(economyClass);
 
         
 

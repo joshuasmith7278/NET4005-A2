@@ -1,8 +1,7 @@
 package Assignment;
 
 import java.rmi.*;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 
 public interface Reservation extends Remote
