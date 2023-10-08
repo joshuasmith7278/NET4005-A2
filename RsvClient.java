@@ -25,6 +25,7 @@ public class RsvClient {
                     //Call the passengers who reserved seats method
                     Reservation client = (Reservation) Naming.lookup(args[1]);
                     System.out.println("List of all booked passengers:");
+                    System.out.println(client.passengerlist());
                 }
 
 

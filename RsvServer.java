@@ -10,7 +10,7 @@ public class RsvServer extends UnicastRemoteObject implements Reservation
 {
     int businessClass[] = new int[5];
     int economyClass[] = new int[25];
-    HashMap<String, Integer> passengers = new HashMap<String, Integer>();
+    HashMap<Integer, String> passengers = new HashMap<Integer, String>();
     int totalSeats = 30;
 
     RsvServer() throws RemoteException {
@@ -34,7 +34,6 @@ public class RsvServer extends UnicastRemoteObject implements Reservation
         int economyBasic = 0;
 
         for(int i = 0; i < businessClass.length; i++){
-            System.out.println(businessClass[i]);
             if(businessClass[i] <= 3 && businessClass[i] != 0){
                 businessReg++;
             }else if(businessClass[i] != 0){
@@ -43,7 +42,6 @@ public class RsvServer extends UnicastRemoteObject implements Reservation
         }
 
         for(int i = 0; i < economyClass.length; i++){
-            System.out.println(economyClass[i]);
             if(economyClass[i] <= 15 && economyClass[i] != 0){
                 economyBasic++;
             }else if(economyClass[i] <= 25 && economyClass[i] != 0){
@@ -71,7 +69,7 @@ public class RsvServer extends UnicastRemoteObject implements Reservation
         if(classT.equals("business") && seatNum < 6){
             for(int i = 0; i < businessClass.length; i++){
                 if(businessClass[i] == seatNum){
-                    passengers.put(name, seatNum);
+                    passengers.put(seatNum, name);
                     businessClass[i] = 0;
                     seatTaken = true;
                     results += "Successfully reserved seat " + String.valueOf(seatNum) + " for passenger " + name + "\n";
@@ -84,13 +82,33 @@ public class RsvServer extends UnicastRemoteObject implements Reservation
 
 
         }
+        else if(classT.equals("economy") && seatNum > 5 && seatNum < 31){
+            for(int i = 0; i < economyClass.length; i++){
+                if(economyClass[i] == seatNum){
+                    passengers.put(seatNum, name);
+                    economyClass[i] = 0;
+                    seatTaken = true;
+                    results += "Successfully reserved seat " + String.valueOf(seatNum) + " for passenger " + name + "\n";
+                }
+            }
 
-        results += Arrays.toString(businessClass);
+            if(seatTaken == false){
+                results += "Seat is already purchased. Check passenger list. \n";
+            }
+        }
+
+        results += Arrays.toString(businessClass) + Arrays.toString(economyClass);
 
         
 
 
         return results;
+    }
+
+
+    public HashMap<Integer, String> passengerlist() throws RemoteException{
+        return passengers;
+
     }
 
     public static void main(String[] args){
